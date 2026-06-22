@@ -803,79 +803,78 @@ html { scroll-behavior: smooth; }
   margin: 0 0 0.4rem;
 }
 
-/* --- product grid + cards --- */
+/* --- product grid + cards (premium editorial) -------------------------------
+   Frameless tiles: the product image carries the luxury, separated by generous
+   whitespace. Restraint over decoration — no heavy borders, no warm clutter. */
 .udara-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.2rem, 2.6vw, 2rem);
+  gap: clamp(1.8rem, 3.2vw, 3rem) clamp(1.4rem, 2.6vw, 2.2rem);
 }
 .udara-grid--2 { grid-template-columns: repeat(2, 1fr); max-width: 880px; margin-left: auto; margin-right: auto; }
 .udara-card {
-  position: relative;       /* anchor for the stretched-link overlay */
-  display: flex; flex-direction: column;
-  /* Light, warm interior — the character now comes from the bold brown frame. */
-  background:
-    linear-gradient(180deg, #fffdf9 0%, #f9f1e6 100%);
-  border: 2.5px solid var(--u-brown);            /* bold, warm brown frame */
-  border-radius: 18px;
-  overflow: hidden;
-  /* Soft warm shadow keeps relief so the frame doesn't read flat. */
-  box-shadow:
-    0 1px 2px rgba(99,49,28,0.05),
-    0 14px 30px -18px rgba(99,49,28,0.22);
-  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1),
-              box-shadow 0.5s ease, border-color 0.5s ease;
-}
-.udara-card:hover,
-.udara-card:focus-within {
-  transform: translateY(-6px);
-  border-color: #6f3f22;                          /* frame deepens on hover */
-  box-shadow:
-    0 2px 4px rgba(99,49,28,0.07),
-    0 30px 56px -28px rgba(99,49,28,0.34),
-    0 12px 24px -18px rgba(198,123,92,0.30);       /* warm halo */
-}
-.udara-card__media {
   position: relative;
-  aspect-ratio: 4 / 3;
-  display: flex; align-items: center; justify-content: center;
-  background:
-    radial-gradient(120% 120% at 30% 18%, #fffdf9, rgba(255,255,255,0) 60%),
-    linear-gradient(150deg, #efe6d6, #e2d4bf 60%, #d9c8ad);
-  border-bottom: 1px solid rgba(60,46,28,0.07);
-  /* seat the image: subtle inner shadow + a soft bottom scrim for legibility */
-  box-shadow: inset 0 -40px 50px -40px rgba(60,46,28,0.28);
+  display: flex; flex-direction: column;
+  background: transparent; border: none; box-shadow: none;
 }
-.udara-card__media::after {
-  content: attr(data-label);
-  position: absolute; bottom: 1rem;
-  font-family: var(--u-font-display); font-style: italic;
-  font-size: 0.95rem; color: rgba(60,46,28,0.5);
-}
-/* When a real image is present, it fills the slot and the placeholder label
-   is suppressed (the product name still shows in the card body below). */
-.udara-card__media img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.udara-card__media:has(img)::after { content: none; }
-/* Subtle zoom on hover for a little life. */
-.udara-card__media img { transition: transform 0.6s ease; }
-.udara-card:hover .udara-card__media img { transform: scale(1.04); }
 /* The whole card is a single link to the product page — image + name only. */
 .udara-card__open {
   display: flex; flex-direction: column; height: 100%;
   text-decoration: none; color: inherit;
 }
-.udara-card__open:focus-visible { outline: 2px solid var(--u-brown); outline-offset: 3px; }
+.udara-card__open:focus-visible { outline: none; }
+.udara-card__open:focus-visible .udara-card__media { outline: 2px solid var(--u-brown); outline-offset: 4px; }
+.udara-card__media {
+  position: relative;
+  aspect-ratio: 4 / 5;                 /* editorial portrait — products get presence */
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  overflow: hidden;
+  /* Clean warm-ivory panel with a soft vignette so each piece sits like a still life. */
+  background: radial-gradient(86% 86% at 50% 32%, #fffefb 0%, #f3ebdd 100%);
+  border: 1px solid rgba(111,63,34,0.10);
+  box-shadow: 0 18px 42px -30px rgba(80,50,28,0.32);
+  transition: box-shadow 0.6s cubic-bezier(0.16,1,0.3,1),
+              transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.udara-card:hover .udara-card__media,
+.udara-card:focus-within .udara-card__media {
+  transform: translateY(-5px);
+  box-shadow: 0 34px 62px -32px rgba(80,50,28,0.44);
+}
+/* Refined placeholder for products awaiting photography. */
+.udara-card__media::after {
+  content: attr(data-label);
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--u-font-display); font-style: italic;
+  font-size: 1.15rem; color: rgba(90,60,35,0.40); letter-spacing: 0.01em;
+}
+.udara-card__media:has(img)::after { content: none; }
+.udara-card__media img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.udara-card:hover .udara-card__media img,
+.udara-card:focus-within .udara-card__media img { transform: scale(1.06); }
 .udara-card__body { display: flex; flex-direction: column; flex: 1; gap: 0.5rem; padding: 1.5rem 1.5rem 1.6rem; }
 .udara-card__meta { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.75rem; color: var(--u-terracotta-text); font-weight: 600; }
-.udara-card__name { font-family: var(--u-font-display); font-size: 1.4rem; line-height: 1.15; color: var(--u-ink); margin: 0; font-weight: 500;
-  text-align: center; padding: 0.9rem 0.9rem 1.1rem; transition: color 0.4s ease; }
-.udara-card:hover .udara-card__name,
-.udara-card:focus-within .udara-card__name { color: var(--u-terracotta-text); }
+.udara-card__name {
+  font-family: var(--u-font-display); font-weight: 500;
+  font-size: 1.32rem; line-height: 1.25; color: var(--u-ink);
+  text-align: center; margin: 0; padding: 1.1rem 0.5rem 0;
+  transition: color 0.4s ease;
+}
+/* A hairline that grows under the name on hover — quiet, couture-like affordance. */
+.udara-card__name::after {
+  content: ""; display: block; width: 0; height: 1px;
+  margin: 0.6rem auto 0; background: var(--u-brown);
+  transition: width 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+.udara-card:hover .udara-card__name::after,
+.udara-card:focus-within .udara-card__name::after { width: 30px; }
 .udara-card__desc { font-size: 0.92rem; font-weight: 300; line-height: 1.65; color: #7d6420; flex: 1; margin: 0.15rem 0 0; }
 .udara-card__foot {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -915,14 +914,13 @@ html { scroll-behavior: smooth; }
   animation: udara-pdp-in 0.6s cubic-bezier(0.16,1,0.3,1) both; }
 @keyframes udara-pdp-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .udara-pdp__grid { animation: none; } }
-.udara-pdp__media { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden;
-  border: 1px solid rgba(111,63,34,0.5);
+.udara-pdp__media { position: relative; aspect-ratio: 4 / 5; border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(111,63,34,0.10);
+  box-shadow: 0 26px 60px -34px rgba(80,50,28,0.40);
   display: flex; align-items: center; justify-content: center;
-  background:
-    radial-gradient(120% 120% at 30% 18%, #fffdf9, rgba(255,255,255,0) 60%),
-    linear-gradient(150deg, #efe6d6, #e2d4bf 60%, #d9c8ad); }
+  background: radial-gradient(86% 86% at 50% 32%, #fffefb 0%, #f3ebdd 100%); }
 .udara-pdp__media::after { content: attr(data-label); position: absolute;
-  font-family: var(--u-font-display); font-style: italic; font-size: 1.1rem; color: rgba(60,46,28,0.5); }
+  font-family: var(--u-font-display); font-style: italic; font-size: 1.2rem; color: rgba(90,60,35,0.40); }
 .udara-pdp__media:has(img)::after { content: none; }
 .udara-pdp__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .udara-pdp__kicker { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem;
@@ -1064,8 +1062,8 @@ html { scroll-behavior: smooth; }
 @media (max-width: 980px) { .udara-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) {
   /* Phones: 2 columns — large enough product imagery, readable names. */
-  .udara-grid, .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
-  .udara-card__name { font-size: 1.05rem; line-height: 1.2; padding: 0.7rem 0.6rem 0.85rem; }
+  .udara-grid, .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 1.6rem 1rem; }
+  .udara-card__name { font-size: 1.08rem; line-height: 1.25; padding: 0.85rem 0.4rem 0; }
 }
 
 /* --- responsive --- */
