@@ -1003,8 +1003,18 @@
 @media (max-width: 600px) { .udara-howto { grid-template-columns: 1fr; } }
 @media (max-width: 980px) { .udara-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) {
-  .udara-grid { grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-  .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  .udara-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+  /* Compact cards so 3 fit per row without text breaking word-by-word. */
+  .udara-card__body { padding: 0.7rem 0.6rem 0.8rem; gap: 0.3rem; }
+  .udara-card__meta { font-size: 0.55rem; letter-spacing: 0.08em; }
+  .udara-card__name { font-size: 0.9rem; line-height: 1.15; overflow-wrap: anywhere; }
+  .udara-card__desc { font-size: 0.7rem; line-height: 1.4; }
+  .udara-card__foot { flex-direction: column; align-items: flex-start; gap: 0.4rem;
+    margin-top: 0.6rem; padding-top: 0.6rem; }
+  .udara-card__price { font-size: 0.9rem; }
+  .udara-card__price small { font-size: 0.6rem; }
+  .udara-card__link { font-size: 0.6rem; letter-spacing: 0.06em; }
 }
 
 /* --- responsive --- */
