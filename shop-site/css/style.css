@@ -26,6 +26,10 @@
 
 .udara-resonance * { box-sizing: border-box; }
 
+/* Smooth anchor scrolling (e.g. returning to the boutique from a product page). */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 /* ---- Focus states --------------------------------------------------------- */
 /* Keyboard-only focus ring (mouse/touch clicks never trigger :focus-visible).
    Gold reads clearly on the cream surface AND on the dark menu overlay. */
@@ -869,7 +873,9 @@
 .udara-card__body { display: flex; flex-direction: column; flex: 1; gap: 0.5rem; padding: 1.5rem 1.5rem 1.6rem; }
 .udara-card__meta { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.75rem; color: var(--u-terracotta-text); font-weight: 600; }
 .udara-card__name { font-family: var(--u-font-display); font-size: 1.4rem; line-height: 1.15; color: var(--u-ink); margin: 0; font-weight: 500;
-  text-align: center; padding: 0.9rem 0.9rem 1.1rem; }
+  text-align: center; padding: 0.9rem 0.9rem 1.1rem; transition: color 0.4s ease; }
+.udara-card:hover .udara-card__name,
+.udara-card:focus-within .udara-card__name { color: var(--u-terracotta-text); }
 .udara-card__desc { font-size: 0.92rem; font-weight: 300; line-height: 1.65; color: #7d6420; flex: 1; margin: 0.15rem 0 0; }
 .udara-card__foot {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -901,10 +907,14 @@
 /* --- product detail page (product.html) --- */
 .udara-pdp { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto;
   padding: clamp(1.5rem, 5vw, 3.5rem) clamp(1.2rem, 5vw, 2.5rem) 5rem; }
-.udara-pdp__back { display: inline-block; margin-bottom: 2rem; font-size: 0.85rem;
-  letter-spacing: 0.04em; color: var(--u-ink-soft); text-decoration: none; }
+.udara-pdp__back { display: inline-flex; align-items: center; min-height: 44px;
+  margin-bottom: 1rem; font-size: 0.85rem; letter-spacing: 0.04em;
+  color: var(--u-ink-soft); text-decoration: none; transition: color 0.3s ease; }
 .udara-pdp__back:hover { color: var(--u-terracotta-text); }
-.udara-pdp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.udara-pdp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
+  animation: udara-pdp-in 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+@keyframes udara-pdp-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .udara-pdp__grid { animation: none; } }
 .udara-pdp__media { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden;
   border: 1px solid rgba(111,63,34,0.5);
   display: flex; align-items: center; justify-content: center;
@@ -921,7 +931,7 @@
   line-height: 1.05; color: var(--u-ink); margin: 0.4rem 0 0; font-weight: 500; }
 .udara-pdp__meta { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;
   color: var(--u-ink-soft); margin: 0.7rem 0 0; }
-.udara-pdp__price { font-family: var(--u-font-display); font-size: 1.7rem; color: var(--u-ink); margin: 1.2rem 0 0; }
+.udara-pdp__price { font-family: var(--u-font-display); font-size: 1.7rem; color: var(--u-ink); margin: 1.2rem 0 0; font-variant-numeric: tabular-nums; }
 .udara-pdp__price small { display: inline; font-family: var(--u-font-body); font-size: 0.8rem;
   letter-spacing: 0.05em; color: var(--u-ink-soft); text-transform: uppercase; margin-left: 0.4rem; }
 .udara-pdp__price--ask { font-style: italic; color: var(--u-ink-soft); font-size: 1.3rem; }
@@ -931,9 +941,10 @@
 .udara-pdp__howto-label { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.72rem;
   font-weight: 600; color: var(--u-terracotta-text); }
 .udara-pdp__howto p { font-size: 0.96rem; font-weight: 300; line-height: 1.65; color: var(--u-ink-soft); margin: 0.6rem 0 0; }
-.udara-pdp__links { display: flex; flex-wrap: wrap; gap: 1.6rem; margin-top: 2rem; }
-.udara-pdp__links a { font-size: 0.85rem; letter-spacing: 0.04em; color: var(--u-ink);
-  text-decoration: none; border-bottom: 1px solid var(--u-brown); padding-bottom: 2px; transition: color 0.4s ease; }
+.udara-pdp__links { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; margin-top: 2rem; }
+.udara-pdp__links a { display: inline-flex; align-items: center; min-height: 44px;
+  font-size: 0.85rem; letter-spacing: 0.04em; color: var(--u-ink);
+  text-decoration: none; border-bottom: 1px solid var(--u-brown); transition: color 0.4s ease; }
 .udara-pdp__links a:hover { color: var(--u-terracotta-text); }
 .udara-pdp__missing { text-align: center; padding: 4rem 0; color: var(--u-ink-soft); }
 @media (max-width: 760px) {
