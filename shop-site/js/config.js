@@ -98,4 +98,10 @@ window.UDARA_CONFIG = {
     maxPixelRatio:       2,    // desktop cap
     mobileMaxPixelRatio: 1.5,  // phone cap
   },
+
+  /* ---- Boutique contact --------------------------------------------------- */
+  // WhatsApp reception number — international format, DIGITS ONLY (no +, spaces
+  // or dashes). Empty string keeps the Enquire buttons inert (no broken links).
+  whatsapp:     '6287765377313',
+  enquireLabel: 'Enquire on WhatsApp',
 };

@@ -69,12 +69,11 @@
   }
 
   /* --- Boutique CTAs → WhatsApp enquiry ---------------------------------- */
-  // ┌──────────────────────────────────────────────────────────────────────┐
-  // │ PUT THE BOUTIQUE WHATSAPP NUMBER HERE — full international format,     │
-  // │ digits only (no +, spaces or dashes).  e.g. '6281234567890'.          │
-  // │ Until it is set, the Enquire buttons stay inert (they will NOT 404).  │
-  // └──────────────────────────────────────────────────────────────────────┘
-  const UDARA_WHATSAPP = '';
+  // The boutique WhatsApp number + button label now live in js/config.js
+  // (window.UDARA_CONFIG) so the homepage and the product pages share one source.
+  // An empty number keeps the Enquire buttons inert (they will NOT 404).
+  const UDARA_WHATSAPP      = (window.UDARA_CONFIG && window.UDARA_CONFIG.whatsapp) || '';
+  const UDARA_ENQUIRE_LABEL = (window.UDARA_CONFIG && window.UDARA_CONFIG.enquireLabel) || 'Enquire on WhatsApp';
 
   (function wireEnquiry() {
     const ctas = Array.prototype.slice.call(
@@ -88,8 +87,11 @@
       const card = a.closest('.udara-card');
       let nameEl = card && card.querySelector('.udara-card__name');
       if (!nameEl) {
+        // Only resolve a real product name; never fall back to a section heading
+        // (e.g. "Strike a few. Close your eyes.") — a non-product CTA should use
+        // the generic boutique message below.
         const block = a.closest('.udara-prose, .udara-sec');
-        nameEl = block && block.querySelector('.udara-card__name, .udara-h3, .udara-h2');
+        nameEl = block && block.querySelector('.udara-card__name');
       }
       const name = (nameEl && nameEl.textContent.trim()) || 'the Udara boutique collection';
       const msg = 'Hello Udara, I would like to enquire about ' + name + '.';
@@ -98,6 +100,7 @@
         a.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
         a.target = '_blank';
         a.rel = 'noopener';
+        a.textContent = UDARA_ENQUIRE_LABEL;
         a.setAttribute('aria-label', 'Enquire about ' + name + ' on WhatsApp');
       } else {
         // No number yet → neutralise the placeholder so nothing navigates to it.
