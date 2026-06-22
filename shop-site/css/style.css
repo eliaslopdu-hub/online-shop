@@ -1063,10 +1063,9 @@ html { scroll-behavior: smooth; }
 @media (max-width: 600px) { .udara-howto { grid-template-columns: 1fr; } }
 @media (max-width: 980px) { .udara-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 600px) {
-  .udara-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-  .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-  /* Compact name so 3 cards fit per row cleanly. */
-  .udara-card__name { font-size: 0.82rem; line-height: 1.2; padding: 0.55rem 0.4rem 0.7rem; overflow-wrap: anywhere; }
+  /* Phones: 2 columns — large enough product imagery, readable names. */
+  .udara-grid, .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 0.9rem; }
+  .udara-card__name { font-size: 1.05rem; line-height: 1.2; padding: 0.7rem 0.6rem 0.85rem; }
 }
 
 /* --- responsive --- */
