@@ -860,9 +860,16 @@
 /* Subtle zoom on hover for a little life. */
 .udara-card__media img { transition: transform 0.6s ease; }
 .udara-card:hover .udara-card__media img { transform: scale(1.04); }
+/* The whole card is a single link to the product page — image + name only. */
+.udara-card__open {
+  display: flex; flex-direction: column; height: 100%;
+  text-decoration: none; color: inherit;
+}
+.udara-card__open:focus-visible { outline: 2px solid var(--u-brown); outline-offset: 3px; }
 .udara-card__body { display: flex; flex-direction: column; flex: 1; gap: 0.5rem; padding: 1.5rem 1.5rem 1.6rem; }
 .udara-card__meta { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.75rem; color: var(--u-terracotta-text); font-weight: 600; }
-.udara-card__name { font-family: var(--u-font-display); font-size: 1.5rem; line-height: 1.1; color: var(--u-ink); margin: 0; font-weight: 500; }
+.udara-card__name { font-family: var(--u-font-display); font-size: 1.4rem; line-height: 1.15; color: var(--u-ink); margin: 0; font-weight: 500;
+  text-align: center; padding: 0.9rem 0.9rem 1.1rem; }
 .udara-card__desc { font-size: 0.92rem; font-weight: 300; line-height: 1.65; color: #7d6420; flex: 1; margin: 0.15rem 0 0; }
 .udara-card__foot {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -889,6 +896,48 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+}
+
+/* --- product detail page (product.html) --- */
+.udara-pdp { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 3.5rem) clamp(1.2rem, 5vw, 2.5rem) 5rem; }
+.udara-pdp__back { display: inline-block; margin-bottom: 2rem; font-size: 0.85rem;
+  letter-spacing: 0.04em; color: var(--u-ink-soft); text-decoration: none; }
+.udara-pdp__back:hover { color: var(--u-terracotta-text); }
+.udara-pdp__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.udara-pdp__media { position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden;
+  border: 1px solid rgba(111,63,34,0.5);
+  display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(120% 120% at 30% 18%, #fffdf9, rgba(255,255,255,0) 60%),
+    linear-gradient(150deg, #efe6d6, #e2d4bf 60%, #d9c8ad); }
+.udara-pdp__media::after { content: attr(data-label); position: absolute;
+  font-family: var(--u-font-display); font-style: italic; font-size: 1.1rem; color: rgba(60,46,28,0.5); }
+.udara-pdp__media:has(img)::after { content: none; }
+.udara-pdp__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.udara-pdp__kicker { text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.75rem;
+  font-weight: 600; color: var(--u-terracotta-text); }
+.udara-pdp__name { font-family: var(--u-font-display); font-size: clamp(2.2rem, 5vw, 3.2rem);
+  line-height: 1.05; color: var(--u-ink); margin: 0.4rem 0 0; font-weight: 500; }
+.udara-pdp__meta { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;
+  color: var(--u-ink-soft); margin: 0.7rem 0 0; }
+.udara-pdp__price { font-family: var(--u-font-display); font-size: 1.7rem; color: var(--u-ink); margin: 1.2rem 0 0; }
+.udara-pdp__price small { display: inline; font-family: var(--u-font-body); font-size: 0.8rem;
+  letter-spacing: 0.05em; color: var(--u-ink-soft); text-transform: uppercase; margin-left: 0.4rem; }
+.udara-pdp__price--ask { font-style: italic; color: var(--u-ink-soft); font-size: 1.3rem; }
+.udara-pdp__desc { font-size: 1.02rem; font-weight: 300; line-height: 1.7; color: var(--u-ink-soft); margin: 1.3rem 0 0; }
+.udara-pdp .udara-cta--lg { margin-top: 1.8rem; }
+.udara-pdp__howto { margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1px solid rgba(138,85,48,0.22); }
+.udara-pdp__howto-label { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.72rem;
+  font-weight: 600; color: var(--u-terracotta-text); }
+.udara-pdp__howto p { font-size: 0.96rem; font-weight: 300; line-height: 1.65; color: var(--u-ink-soft); margin: 0.6rem 0 0; }
+.udara-pdp__links { display: flex; flex-wrap: wrap; gap: 1.6rem; margin-top: 2rem; }
+.udara-pdp__links a { font-size: 0.85rem; letter-spacing: 0.04em; color: var(--u-ink);
+  text-decoration: none; border-bottom: 1px solid var(--u-brown); padding-bottom: 2px; transition: color 0.4s ease; }
+.udara-pdp__links a:hover { color: var(--u-terracotta-text); }
+.udara-pdp__missing { text-align: center; padding: 4rem 0; color: var(--u-ink-soft); }
+@media (max-width: 760px) {
+  .udara-pdp__grid { grid-template-columns: 1fr; }
 }
 
 /* --- price spec list (gong mallets, etc.) --- */
@@ -1005,16 +1054,8 @@
 @media (max-width: 600px) {
   .udara-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
   .udara-grid--2 { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-  /* Compact cards so 3 fit per row without text breaking word-by-word. */
-  .udara-card__body { padding: 0.7rem 0.6rem 0.8rem; gap: 0.3rem; }
-  .udara-card__meta { font-size: 0.55rem; letter-spacing: 0.08em; }
-  .udara-card__name { font-size: 0.9rem; line-height: 1.15; overflow-wrap: anywhere; }
-  .udara-card__desc { font-size: 0.7rem; line-height: 1.4; }
-  .udara-card__foot { flex-direction: column; align-items: flex-start; gap: 0.4rem;
-    margin-top: 0.6rem; padding-top: 0.6rem; }
-  .udara-card__price { font-size: 0.9rem; }
-  .udara-card__price small { font-size: 0.6rem; }
-  .udara-card__link { font-size: 0.6rem; letter-spacing: 0.06em; }
+  /* Compact name so 3 cards fit per row cleanly. */
+  .udara-card__name { font-size: 0.82rem; line-height: 1.2; padding: 0.55rem 0.4rem 0.7rem; overflow-wrap: anywhere; }
 }
 
 /* --- responsive --- */

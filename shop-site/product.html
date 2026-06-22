@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Udara — Product</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css?v=4" />
+</head>
+<body>
+  <div class="udara-resonance">
+    <div class="udara-backdrop" aria-hidden="true"></div>
+
+    <main class="udara-pdp" id="udara-pdp">
+      <a class="udara-pdp__back" href="index.html#boutique">← Back to the shop</a>
+      <div id="udara-pdp-content"><!-- filled by JS --></div>
+    </main>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+      var list = window.UDARA_PRODUCTS || [];
+      var p = list.filter(function (x) { return x.id === id; })[0];
+      var el = document.getElementById("udara-pdp-content");
+
+      if (!p) {
+        el.innerHTML = '<p class="udara-pdp__missing">Product not found. '
+          + '<a href="index.html#boutique">Return to the shop →</a></p>';
+        return;
+      }
+
+      document.title = "Udara — " + p.name.replace(/&amp;/g, "&");
+
+      var priceClass = "udara-pdp__price"
+        + (/--ask/.test(p.priceClass) ? " udara-pdp__price--ask" : "");
+
+      var media = p.img
+        ? '<picture><source type="image/webp" srcset="' + p.webp + '">'
+          + '<img src="' + p.img + '" alt="' + p.alt + '"></picture>'
+        : '';
+
+      var html = ''
+        + '<div class="udara-pdp__grid">'
+        +   '<div class="udara-pdp__media" data-label="' + p.label + '">' + media + '</div>'
+        +   '<div class="udara-pdp__info">'
+        +     '<span class="udara-pdp__kicker">' + p.categoryName + '</span>'
+        +     '<h1 class="udara-pdp__name">' + p.name + '</h1>'
+        +     '<p class="udara-pdp__meta">' + p.meta + '</p>'
+        +     '<p class="' + priceClass + '">' + p.price + '</p>'
+        +     '<p class="udara-pdp__desc">' + p.desc + '</p>'
+        +     '<a class="udara-cta udara-cta--lg" href="' + p.link + '">Enquire with the boutique</a>'
+        +     '<div class="udara-pdp__howto">'
+        +       '<span class="udara-pdp__howto-label">How to use</span>'
+        +       '<p>' + p.howto + '</p>'
+        +     '</div>'
+        +     '<p class="udara-pdp__links">'
+        +       '<a href="index.html#history">Our story →</a>'
+        +       '<a href="index.html#how-to-use">Full ritual guide →</a>'
+        +     '</p>'
+        +   '</div>'
+        + '</div>';
+
+      el.innerHTML = html;
+    })();
+  </script>
+</body>
+</html>
