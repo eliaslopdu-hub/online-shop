@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Tuning Fork — Resonance you can feel</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Single scoped wrapper so nothing collides with a host theme.
+       Everything 3D-fork related lives under .udara-resonance. -->
+  <div class="udara-resonance">
+
+    <!-- Fixed cream backdrop behind everything. -->
+    <div class="udara-backdrop" aria-hidden="true"></div>
+
+    <!-- Slow concentric resonance rings — behind the 3D canvas (z0). -->
+    <div class="udara-rings" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- On-brand loader -->
+    <div class="udara-loader" id="udara-loader" aria-hidden="true">
+      <div class="udara-loader__ring"></div>
+      <p class="udara-loader__label">tuning the resonance…</p>
+    </div>
+
+    <!-- 3D HERO (full viewport) -->
+    <section class="udara-hero" id="udara-hero">
+      <div class="udara-hero__sticky">
+        <!-- WebGL canvas mounts here -->
+        <canvas class="udara-hero__canvas" id="udara-canvas"></canvas>
+
+        <!-- Graceful fallback if WebGL is unavailable (poster image hook) -->
+        <div class="udara-hero__fallback" id="udara-fallback" hidden>
+          <img src="assets/hero-fallback.jpg" alt="Tuning fork resonance" />
+        </div>
+
+        <!-- Overlay copy -->
+        <div class="udara-hero__copy">
+          <p class="udara-hero__eyebrow" id="udara-eyebrow">Udara · Sound Therapy</p>
+          <h1 class="udara-hero__title" id="udara-title">Resonance you can feel</h1>
+          <p class="udara-hero__subhead" id="udara-subhead">
+            Sound therapy, tuned to the body.
+          </p>
+        </div>
+
+        <!-- Sound control (default muted, user-triggered 432 Hz strike) -->
+        <button class="udara-strike" id="udara-strike" aria-pressed="false"
+                aria-label="Strike the fork and unmute the tone">
+          <span class="udara-strike__icon" aria-hidden="true"></span>
+          <span class="udara-strike__label" id="udara-strike-label">Strike · muted</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Tactile finish: full-viewport vignette + film grain (CSS only). -->
+    <div class="udara-vignette" aria-hidden="true"></div>
+    <div class="udara-grain" aria-hidden="true"></div>
+
+  </div>
+
+  <!-- GSAP (used only for the fork's soft scale-in entrance) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <!-- Three.js (ES module via importmap) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+
+  <script src="js/config.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
