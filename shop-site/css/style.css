@@ -366,6 +366,7 @@ html { scroll-behavior: smooth; }
   z-index: 4;            /* above canvas + grain/vignette, so text is clean */
   background: transparent; /* lets the lingering canvas waves show behind the text */
   overflow: hidden; /* contain the soft blob accents */
+  counter-reset: udara-cat; /* editorial chapter numbering for the catalogue */
 }
 /* The content slides up over the dissolved (now plain-cream) tail of the hero.
    Both are the same cream, so this overlap makes the boundary invisible. */
@@ -788,8 +789,21 @@ html { scroll-behavior: smooth; }
 }
 
 /* --- category scaffold --- */
-.udara-category { scroll-margin-top: 1.5rem; }
+.udara-category { scroll-margin-top: 1.5rem; counter-increment: udara-cat; }
 .udara-cat-head { text-align: center; max-width: 640px; margin: 0 auto clamp(2.6rem, 5vw, 4rem); }
+/* Editorial chapter numeral (01–06) with a thin descending rule — magazine cue. */
+.udara-cat-head::before {
+  content: counter(udara-cat, decimal-leading-zero);
+  display: block;
+  font-family: var(--u-font-display);
+  font-size: 1.05rem; letter-spacing: 0.42em;
+  color: var(--u-wave-text); opacity: 0.75;
+  margin: 0 0 1.5rem; padding-left: 0.42em; /* offset the tracking so it reads centered */
+}
+.udara-cat-head::after {
+  content: ""; display: block; width: 1px; height: clamp(1.6rem, 3vw, 2.4rem);
+  margin: 1.4rem auto 0; background: linear-gradient(var(--u-terracotta), transparent);
+}
 .udara-cat-head .udara-lead { margin: 1.2rem auto 0; }
 .udara-cat-feature { margin-bottom: clamp(3rem, 7vw, 5rem); }
 .udara-cat-grid { margin-top: clamp(3rem, 7vw, 5rem); }
@@ -875,6 +889,23 @@ html { scroll-behavior: smooth; }
 }
 .udara-card:hover .udara-card__name::after,
 .udara-card:focus-within .udara-card__name::after { width: 30px; }
+
+/* Staggered reveal — cards rise in sequence as their category enters the
+   viewport, giving the catalogue a curated, choreographed entrance. */
+.udara-category .udara-card {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.9s ease, transform 1s cubic-bezier(0.16,1,0.3,1);
+}
+.udara-category.in-view .udara-card { opacity: 1; transform: none; }
+.udara-category.in-view .udara-card:nth-child(1) { transition-delay: 0.04s; }
+.udara-category.in-view .udara-card:nth-child(2) { transition-delay: 0.12s; }
+.udara-category.in-view .udara-card:nth-child(3) { transition-delay: 0.20s; }
+.udara-category.in-view .udara-card:nth-child(4) { transition-delay: 0.28s; }
+.udara-category.in-view .udara-card:nth-child(5) { transition-delay: 0.36s; }
+.udara-category.in-view .udara-card:nth-child(6) { transition-delay: 0.44s; }
+.udara-category.in-view .udara-card:nth-child(7) { transition-delay: 0.52s; }
+.udara-category.in-view .udara-card:nth-child(8) { transition-delay: 0.60s; }
+
 .udara-card__desc { font-size: 0.92rem; font-weight: 300; line-height: 1.65; color: #7d6420; flex: 1; margin: 0.15rem 0 0; }
 .udara-card__foot {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -1080,6 +1111,7 @@ html { scroll-behavior: smooth; }
 /* ---- Reduced motion ------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
+  .udara-category .udara-card { opacity: 1; transform: none; transition: none; }
   .udara-loader__ring,
   .udara-scrollhint span,
   .udara-grain { animation: none; }
