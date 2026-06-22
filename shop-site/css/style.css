@@ -1125,11 +1125,11 @@ html { scroll-behavior: smooth; }
 }
 
 /* ===========================================================================
-   PREMIUM LAYER — micro-typography, paper grain, custom cursor, page wipe.
+   PREMIUM LAYER — micro-typography, paper grain, page wipe.
    Photo-independent refinements that raise the perceived craft of the site.
    ========================================================================== */
 
-/* 3 · Micro-typography — kerning, ligatures, optical sizing across the brand. */
+/* Micro-typography — kerning, ligatures, optical sizing across the brand. */
 .udara-resonance {
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
@@ -1155,35 +1155,7 @@ html { scroll-behavior: smooth; }
   background-size: 200px 200px;
 }
 
-/* 1 · Custom cursor — a fine dot + trailing ring, fine-pointer devices only. */
-.udara-cursor, .udara-cursor-ring {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  pointer-events: none; border-radius: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0; transition: opacity 0.4s ease;
-}
-.udara-cursor {
-  width: 6px; height: 6px; background: var(--u-brown);
-}
-.udara-cursor-ring {
-  width: 34px; height: 34px; border: 1px solid rgba(138,85,48,0.55);
-  transition: opacity 0.4s ease, width 0.35s cubic-bezier(0.16,1,0.3,1),
-              height 0.35s cubic-bezier(0.16,1,0.3,1), background 0.35s ease, border-color 0.35s ease;
-}
-.udara-cursor-active .udara-cursor,
-.udara-cursor-active .udara-cursor-ring { opacity: 1; }
-/* Over an interactive element the ring blooms and softly fills. */
-.udara-cursor-hover .udara-cursor-ring {
-  width: 56px; height: 56px;
-  background: rgba(138,85,48,0.08); border-color: rgba(138,85,48,0.35);
-}
-.udara-cursor-hover .udara-cursor { opacity: 0; }
-@media (hover: hover) and (pointer: fine) {
-  .udara-cursor-on, .udara-cursor-on a, .udara-cursor-on button,
-  .udara-cursor-on .udara-card__open { cursor: none; }
-}
-
-/* 2 · Page wipe — a cream veil that fades the page in, and out on navigation. */
+/* Page wipe — a cream veil that fades the page in, and out on navigation. */
 .udara-pagewipe {
   position: fixed; inset: 0; z-index: 9000;
   background: var(--u-bg);
@@ -1194,6 +1166,5 @@ html { scroll-behavior: smooth; }
 .udara-pagewipe.is-leaving { opacity: 1; transition: opacity 0.45s ease; }
 
 @media (prefers-reduced-motion: reduce) {
-  .udara-cursor, .udara-cursor-ring { display: none; }
   .udara-pagewipe { display: none; }
 }

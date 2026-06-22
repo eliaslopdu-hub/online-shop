@@ -1,7 +1,6 @@
-/* Premium interaction layer — page-wipe transitions + a bespoke cursor.
+/* Premium interaction layer — page-wipe transitions.
    Pure vanilla, no dependencies. Degrades gracefully (reduced-motion, touch). */
 (function () {
-  var root = document.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- Page wipe ---------------------------------------------------------- */
@@ -38,44 +37,4 @@
       wipe.classList.add('is-clear');
     }
   });
-
-  /* ---- Bespoke cursor (fine pointers only) -------------------------------- */
-  var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  if (fine && !reduce) {
-    root.classList.add('udara-cursor-on');
-    var dot = document.createElement('div');  dot.className = 'udara-cursor';
-    var ring = document.createElement('div'); ring.className = 'udara-cursor-ring';
-    document.body.appendChild(dot);
-    document.body.appendChild(ring);
-
-    var mx = window.innerWidth / 2, my = window.innerHeight / 2;
-    var rx = mx, ry = my, active = false;
-
-    window.addEventListener('mousemove', function (e) {
-      mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-      if (!active) { active = true; root.classList.add('udara-cursor-active'); }
-    });
-    document.addEventListener('mouseleave', function () {
-      root.classList.remove('udara-cursor-active'); active = false;
-    });
-
-    var hoverSel = 'a, button, .udara-card__open, [role="button"]';
-    document.addEventListener('mouseover', function (e) {
-      if (e.target.closest && e.target.closest(hoverSel)) root.classList.add('udara-cursor-hover');
-    });
-    document.addEventListener('mouseout', function (e) {
-      var from = e.target.closest && e.target.closest(hoverSel);
-      var to = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest(hoverSel);
-      if (from && !to) root.classList.remove('udara-cursor-hover');
-    });
-
-    (function loop() {
-      rx += (mx - rx) * 0.18;
-      ry += (my - ry) * 0.18;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(loop);
-    })();
-  }
 })();
